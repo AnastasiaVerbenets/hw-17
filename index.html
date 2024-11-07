@@ -2,14 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pagination</title>
     
-    <script type="module" crossorigin src="/pagination/assets/index-99a6ec52.js"></script>
-    <link rel="stylesheet" href="/pagination/assets/index-66886d44.css">
+    <script type="module" crossorigin src="/pagination/assets/index-21bdc509.js"></script>
+    <link rel="stylesheet" href="/pagination/assets/index-4204f30f.css">
   </head>
   <body>
+    <form id="form">
+      <input
+        type="text"
+        id="input"
+        name="query"
+        placeholder="Search"
+        autocomplete="off"
+      />
+      <button id="btn" type="submit">Search</button>
+    </form>
+
+    <ul id="list"></ul>
+
+    <button id="load-more__btn" type="button">Load more</button>
     
   </body>
 </html>
