@@ -1,57 +1,36 @@
-import MovieApiService from "./js/movies-service";
+import ImagesApiService from "./js/images-service";
 
-const movieApiService = new MovieApiService();
+const imagesApiService = new ImagesApiService();
 
 const list = document.querySelector('.list');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
+const loadMore = document.querySelector('.load-more__btn');
 
-loadMovies();
+loadImages();
 
-prevBtn.addEventListener('click', onPrevPage);
-nextBtn.addEventListener('click', onNextPage);
+loadMore.addEventListener('click', onLoadMore);
 
-function loadMovies() {
-    movieApiService
-        .fetchMovies()
-        .then(movies => renderMovies(movies.slice(0, 9)))
+function loadImages() {
+    imagesApiService
+        .fetchImages()
+        .then(images => renderImages(images.slice(0, 3)))
         .catch(error => console.log(error));
 }
 
-function renderMovies(movies) {
-    const markUp = movies.map(movie => {
+function renderImages(images) {
+    const markUp = images.map(image => {
         return `
-    <li class='thumb'>
-    <img src='https://image.tmdb.org/t/p/w500/${movie.poster_path}' alt='${movie.title}' width='400'>
-        <h2>${movie.original_title}</h2>
-        <p>Original language: ${movie.original_language}</p>
-        <p>Release date: ${movie.release_date}</p>
-        <p>Origin country: ${movie.origin_country}</p>
-    </li>
-    `;
+        <li class="item">
+            <img src="${image.largeImageURL}" alt="${image.type}" />
+            <p class="user">User: ${image.user}</p>
+            <p class="likes">Likes: ${image.likes}</p>
+            <p class="comments">Comments: ${image.comments}</p>
+        </li>
+        `;
     }).join('');
 
     list.insertAdjacentHTML('beforeend', markUp);
 }
 
-function onPrevPage() {
-    movieApiService.decrementPage();
-    clear();
-    loadMovies();
-    toggleBtn();
-}
-
-function onNextPage() {
-    movieApiService.incrementPage();
-    clear();
-    loadMovies();
-    toggleBtn();
-}
-
-function clear() {
-    list.innerHTML = '';
-}
-
-function toggleBtn() {
-    prevBtn.disabled = movieApiService.page <= 1;
+function onLoadMore() {
+    imagesApiService.fetchImages().then(renderImages);
 }
