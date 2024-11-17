@@ -1,9 +1,0 @@
-(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))a(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const c of r.addedNodes)c.tagName==="LINK"&&c.rel==="modulepreload"&&a(c)}).observe(document,{childList:!0,subtree:!0});function t(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function a(e){if(e.ep)return;e.ep=!0;const r=t(e);fetch(e.href,r)}})();const f="04f715244097a0c4a22752c3612f0538",g="https://api.themoviedb.org/3";class h{constructor(){this.page=1}fetchMovies(){const o=`${g}/movie/popular?api_key=${f}&language=en-US&page=${this.page}`;return fetch(o).then(t=>{if(!t.ok)throw new Error(error);return t.json()}).then(t=>t.results)}incrementPage(){this.page+=1}decrementPage(){this.page>1&&(this.page-=1)}}const i=new h,l=document.querySelector(".list"),u=document.querySelector(".prev-btn"),m=document.querySelector(".next-btn");s();u.addEventListener("click",v);m.addEventListener("click",P);function s(){i.fetchMovies().then(n=>y(n.slice(0,9))).catch(n=>console.log(n))}function y(n){const o=n.map(t=>`
-    <li class='thumb'>
-    <img src='https://image.tmdb.org/t/p/w500/${t.poster_path}' alt='${t.title}' width='400'>
-        <h2>${t.original_title}</h2>
-        <p>Original language: ${t.original_language}</p>
-        <p>Release date: ${t.release_date}</p>
-        <p>Origin country: ${t.origin_country}</p>
-    </li>
-    `).join("");l.insertAdjacentHTML("beforeend",o)}function v(){i.decrementPage(),d(),s(),p()}function P(){i.incrementPage(),d(),s(),p()}function d(){l.innerHTML=""}function p(){u.disabled=i.page<=1}
