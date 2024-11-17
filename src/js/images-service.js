@@ -7,7 +7,8 @@ export default class ImagesApiService {
     }
 
     fetchImages() {
-        const url = `${BASE_URL}?key=${API_KEY}&page=${this.page}&image_type=photo&per_page=3&colors=blue&orientation=horizontal`;
+        // const url = `${BASE_URL}?key=${API_KEY}&page=${this.page}&image_type=photo&per_page=3&colors=blue&orientation="horizontal"`;
+        const url = `${BASE_URL}?key=${API_KEY}`;
 
         return fetch(url).then(response => {
             if (!response.ok) {
@@ -15,7 +16,10 @@ export default class ImagesApiService {
             }
 
             return response.json();
-        }).then(({ hits }) => { this.incrementPage(); return hits; });
+        }).then(({ hits }) => {
+            this.incrementPage();
+            return hits;
+        });
 
     }
 
