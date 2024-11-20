@@ -12,7 +12,7 @@ loadMore.addEventListener('click', onLoadMore);
 function loadImages() {
     imagesApiService
         .fetchImages()
-        .then(images => renderImages(images.slice(0, 3)))
+        .then(images => renderImages(images))
         .catch(error => console.log(error));
 }
 
@@ -32,5 +32,5 @@ function renderImages(images) {
 }
 
 function onLoadMore() {
-    imagesApiService.fetchImages().then(renderImages);
+    loadImages();
 }
